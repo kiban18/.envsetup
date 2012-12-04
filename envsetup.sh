@@ -2,20 +2,20 @@
 
 set -o vi
 
-alias cdenvsetup='cd ~/.envsetup'
+envsetup=~/.envsetup
+envsetup_sh=$envsetup/envsetup.sh
+devsetup_sh=$envsetup/devsetup.sh
+pathsetup_sh=$envsetup/pathsetup.sh
+alias cdenvsetup='cd $envsetup'
+alias s.envsetup='source $envsetup_sh'
+alias s.devsetup='source $devsetup_sh'
+alias s.pathsetup='source $pathsetup_sh'
+alias vienvsetup='vim $envsetup_sh'
+alias videvsetup='vim $devsetup_sh'
+alias vipathsetup='vim $pathsetup_sh'
 
-envsetup=~/.envsetup/envsetup.sh
-devsetup=~/.envsetup/devsetup.sh
-pathsetup=~/.envsetup/pathsetup.sh
-alias source.envsetup='source $envsetup'
-alias source.devsetup='source $devsetup'
-alias source.pathsetup='source $pathsetup'
-alias vienvsetup='vim $envsetup'
-alias videvsetup='vim $devsetup'
-alias vipathsetup='vim $pathsetup'
-
-vimrc=~/.envsetup/.vimrc
-gitconfig=~/.envsetup/.gitconfig
+vimrc=$envsetup/.vimrc
+gitconfig=$envsetup/.gitconfig
 alias ln.vimrc='ln -s $vimrc .vimrc'
 alias ln.gitconfig='ln -s $gitconfig .gitconfig'
 alias vivimrc='vim $vimrc'
@@ -23,22 +23,10 @@ alias vigitconfig='vim $gitconfig'
 
 alias e='exit'
 
-alias ls='ls --color=auto'
+#alias ls='ls --color=auto'
 alias ll='ls -alh'
 alias llr='ls -alRh'
 alias cd..='cd ..'
-
-alias checkver1='apt-cache policy'
-alias checkver2='apt-cache show'
-alias checkver3='apt-cache showpkg'
-alias checkver4='dpkg -s'
-alias checkver5=''
-
-alias n='nautilus .'
-alias ffplay='ffplay -autoexit'
-alias ff='ffplay -autoexit'
-alias play='ffplay -autoexit'
-
 alias df='df -h'
 alias du.1depth='du --max-depth=1 -h'
 alias du.2depth='du --max-depth=2 -h'
