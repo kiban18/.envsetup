@@ -17,4 +17,4 @@ export skindir=$sdk/platforms/android-16/skins
 alias ls.skins='l $skindir'
 alias emulator.build='emulator -sysdir $OUT -data $OUT/userdata.img -skindir $skindir'
 
-echo ~/.envsetup/devsetup.sh sourced!!!
+echo ~/.envsetup/macosx/devsetup.sh sourced!!!

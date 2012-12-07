@@ -14,4 +14,4 @@ if [[ "$adt_bundle_mac" != "" ]]; then
     export PATH=$PATH:$adt_bundle_mac/android-ndk-r8c
 fi
 
-echo ~/.envsetup/pathsetup.sh sourced!!!
+echo ~/.envsetup/macosx/pathsetup.sh sourced!!!
