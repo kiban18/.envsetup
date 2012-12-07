@@ -2,10 +2,15 @@
 
 set -o vi
 
+case $OSTYPE in
+  darwin*) os=macosx;;
+  linux*)  os=ubuntu;;
+esac
+
 envsetup=~/.envsetup
 envsetup_sh=$envsetup/envsetup.sh
-devsetup_sh=$envsetup/devsetup.sh
-pathsetup_sh=$envsetup/pathsetup.sh
+devsetup_sh=$envsetup/$os/devsetup.sh
+pathsetup_sh=$envsetup/$os/pathsetup.sh
 alias cdenvsetup='cd $envsetup'
 alias source.envsetup='source $envsetup_sh'
 alias source.devsetup='source $devsetup_sh'
