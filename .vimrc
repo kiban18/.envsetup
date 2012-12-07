@@ -1,5 +1,7 @@
-:highlight LineNr term=bold cterm=NONE ctermfg=LightGrey ctermbg=Black gui=NONE guifg=LightGrey guibg=Black
-:highlight Normal ctermfg=LightGrey ctermbg=Black guifg=LightGrey guibg=Black
+:highlight LineNr term=bold cterm=NONE ctermfg=Black ctermbg=Brown gui=NONE guifg=Black guibg=Brown
+:highlight Normal term=bold cterm=NONE ctermfg=Black ctermbg=Brown gui=NONE guifg=Black guibg=Brown
+":highlight Cursor gui=reverse guifg=NONE guibg=NONE
+":highlight Normal ctermfg=LightGrey ctermbg=Black guifg=LightGrey guibg=Black
 
 "set wrap " 자동으로 를 삽입하여 다음 줄로 넘어간다.
 set nocompatible " vi 오리지널과 호환하는 모드를 사용하지 않음. (vim 확장)

@@ -10,6 +10,11 @@ export doc=$android/doc
 export tool=$android/tool
 
 alias lunch.android-4.2.1_r1='cd $aosp/android-4.2.1_r1 && . build/envsetup.sh && lunch full-eng'
-alias emulator.build='emulator -sysdir $OUT -data $OUT/userdata.img'
+
+export adt_bundle_mac=/Applications/adt-bundle-mac
+export sdk=$adt_bundle_mac/sdk
+export skindir=$sdk/platforms/android-16/skins
+alias ls.skins='l $skindir'
+alias emulator.build='emulator -sysdir $OUT -data $OUT/userdata.img -skindir $skindir'
 
 echo ~/.envsetup/devsetup.sh sourced!!!
