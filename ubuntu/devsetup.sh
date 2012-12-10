@@ -233,7 +233,7 @@ alias checkremote='repo start checkremote .; git remote update; git branch -a; g
 alias make.ctags='ctags -B -F -R --exclude="^out"'
 alias make.cscope='$ENVSETUP/makecscope.sh'
 alias make.filelist='rm filelist'
-alias makedb='make.ctags; make.cscope; make.filelist'
+alias make.allDBs='make.ctags; make.cscope; make.filelist'
 
 alias findlib='$FINDLIB_SH'
 alias findpkg='$FINDPKG_SH'
