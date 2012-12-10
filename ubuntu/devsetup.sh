@@ -10,14 +10,9 @@ export ENVSETUP=~/.envsetup
 export TOOL_MOUNTED=$WORK_MOUNTED/tool
 export SOURCEDIR=$WORK_MOUNTED/source
 
+export AOSPDIR=$SOURCEDIR/aosp
 export ANDROIDDIR=$SOURCEDIR/android
 export GOOGLETVDIR=$SOURCEDIR/googletv
-export GITCORPDIR=$GOOGLETVDIR/gitcorp
-export GITV2DOT1DIR=$GOOGLETVDIR/gitv2.1
-export GITV3DOT0DIR=$GOOGLETVDIR/gitv3.0
-export GITV4DOT0DIR=$GOOGLETVDIR/gitv4.0
-export LGV3DOT0DIR=$GOOGLETVDIR/lgv3.0
-export ANDROIDDIR=$SOURCEDIR/android
 export CTSDIR=$SOURCEDIR/android-cts/android-cts-3.2_r5
 export GCTSDIR=$SOURCEDIR/android-gcts/android-cts
 export CTSTOOLSDIR=$CTSDIR/tools
@@ -158,33 +153,25 @@ alias updateapp='android update project'
 
 alias eclipse='$ADT_BUNDLE/eclipse/eclipse -vm $TOOL_MOUNTED/jdk1.6.0_33/bin &'
 
-alias lunch.android-4.2_r1='cd $ANDROIDDIR/android-4.2_r1; . build/envsetup.sh; lunch full-eng; source.envsetup'
-alias lunch.aah='cd $ANDROIDDIR/jb-mr1-aah-dev; . build/envsetup.sh; lunch full-eng; source.envsetup'
+alias lunch.android.master='cd $ANDROIDDIR/master; . build/envsetup.sh; lunch full-eng; source.devsetup'
+alias lunch.android.jb-mr1.1-dev='cd $ANDROIDDIR/jb-mr1.1-dev; . build/envsetup.sh; lunch full-eng; source.devsetup'
+alias lunch.android.jb-mr1-aah-dev='cd $ANDROIDDIR/jb-mr1-aah-dev; . build/envsetup.sh; lunch full-eng; source.devsetup'
 
-alias lunch.gtv-4.0-jb-mr0=' cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; '
-alias build.gtv-4.0-jb-mr0=' cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; makewithlog; makeotawithlog; gtv_reinstall'
-alias night.gtv-4.0-jb-mr0=' cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; repo sync -j20; makewithlog; makeotawithlog; '
+alias lunch.aosp.master='cd $AOSPDIR/master; . build/envsetup.sh; lunch full-eng; source.devsetup'
+alias lunch.aosp.jb-mr1-dev='cd $AOSPDIR/jb-mr1-dev; . build/envsetup.sh; lunch full-eng; source.devsetup'
+alias lunch.aosp.android-4.2.1_r1='cd $AOSPDIR/android-4.2.1_r1; . build/envsetup.sh; lunch full-eng; source.devsetup'
 
-alias lunchgit='cd $GITCORPDIR; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-alias lunchgit0='cd $GOOGLETVDIR/gitcorp_0; . build/envsetup.sh; lunch berlin-eng; source.envsetup'
-#alias lunchgit0='cd $GOOGLETVDIR/gitcorp_0; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-alias lunchgit1='cd $GOOGLETVDIR/gitcorp_1; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-alias lunchgit2='cd $GOOGLETVDIR/gitcorp_2; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-alias lunchgitdbg='cd $GOOGLETVDIR/gitcorp_dbg; . build/envsetup.sh; choosecombo'
-alias lunchgitv2.1='cd $GOOGLETVDIR/gitv2.1; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-alias lunchgitv3.0='cd $GOOGLETVDIR/gitv3.0; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-alias lunchgitv4.0='cd $GOOGLETVDIR/gitv4.0; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-alias lunchlg0='cd $GOOGLETVDIR/partnerlg_0; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-alias lunchlgv3.0='cd $GOOGLETVDIR/lgv3.0; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-alias lunchpartner-gtv-2.1-berlin='cd $GOOGLETVDIR/partner-gtv-2.1-berlin; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
+alias lunch.tv.gitcorp_2='cd $GOOGLETVDIR/gitcorp_2; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
 
-alias goandroid='cd $ANDROIDDIR; . build/envsetup.sh;' # lunch full-eng'
+alias lunch.tv.gtv-4.0-jb-mr0=' cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; '
+alias build.tv.gtv-4.0-jb-mr0=' cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; makewithlog; makeotawithlog; gtv_reinstall'
+alias night.tv.gtv-4.0-jb-mr0=' cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; repo sync -j20; makewithlog; makeotawithlog; '
 
+alias lunch.tv.gtv-4.0-jb-mr1=' cd $GOOGLETVDIR/gtv-4.0-jb-mr1; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; '
 
 alias deletelog='echo "delete logfiles below..."; ll make_*.log 2>/dev/null; rm ./make_*.log; echo "remained logfiles below..."; find . -name "make_*.log"'
-
-
 alias makewithlog='$MAKEWITHLOG_SH'
+alias makeotawithlog='$MAKEOTAWITHLOG_SH'
 alias gtv_reinstall='$GTV_REINSTALL_SH'
 alias do_all_at_once='$DO_ALL_AT_ONCE_SH'
 
@@ -243,10 +230,10 @@ alias checkremotehelp='echo "repo start checkremote ."; echo "git remote update"
 alias checkremote='repo start checkremote .; git remote update; git branch -a; git diff checkremote remotes/m/master; repo abandon checkremote'
 
 
-alias mkct='ctags -B -F -R --exclude="^out"'
-alias mkcs='$ENVSETUP/mkcscope.sh'
-alias delfl='rm filelist'
-alias mkdb='delfl; mkct; mkcs'
+alias make.ctags='ctags -B -F -R --exclude="^out"'
+alias make.cscope='$ENVSETUP/makecscope.sh'
+alias make.filelist='rm filelist'
+alias makedb='make.ctags; make.cscope; make.filelist'
 
 alias findlib='$FINDLIB_SH'
 alias findpkg='$FINDPKG_SH'
