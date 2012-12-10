@@ -23,6 +23,6 @@ alias emulator.build.skin='$emulator_cmd_common -skindir $skindir -skin '
 alias make.ctags='ctags -B -F -R --exclude="^out"'
 alias make.cscope='$envsetup/makecscope.sh'
 alias make.filelist='rm filelist'
-alias makedb='make.ctags; make.cscope; make.filelist'
+alias make.allDBs='make.ctags; make.cscope; make.filelist'
 
 echo ~/.envsetup/$os/devsetup.sh sourced!!!
