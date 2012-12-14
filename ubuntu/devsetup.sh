@@ -61,8 +61,12 @@ export GDB=$GOOGLETVDIR/gitv4.0/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/
 alias agdb='$GDB'
 
 alias vijdbrc='vi $ENVSETUP/.jdbrc'
-alias lngdbinit='ln -s $ENVSETUP/.gdbinit .gdbinit'
-alias lnjdbrc='ln -s $ENVSETUP/.jdbrc .jdbrc'
+alias ln.gdbinit='ln -s $ENVSETUP/.gdbinit .gdbinit'
+alias ln.jdbrc='ln -s $ENVSETUP/.jdbrc .jdbrc'
+gdb_name=ln.gdb
+alias ln.gdb='rm -f $gdb_name; ln -s $ANDROID_TOOLCHAIN/*gdb $gdb_name'
+symbols_name=ln.symbols
+alias ln.symbols='rm -f $symbols_name; ln -s $OUT/symbols $symbols_name'
 
 alias cdroot='cd ../../../../..; ll'
 alias cdres='cd ../../../../../res/; ll'
@@ -101,7 +105,7 @@ alias adbremount='$ADBCON_SH && adb -s $ADBHOSTPORT remount'
 alias adbsync='$ADBCON_SH && adb -s $ADBHOSTPORT sync'
 alias adbpush='$ADBCON_SH && adb -s $ADBHOSTPORT push'
 alias adbpull='$ADBCON_SH && adb -s $ADBHOSTPORT pull'
-alias adbinstallhelp='echo "adb -s $ADBHOSTPORT install [-r] bin/*.apk"'
+alias adbinstall.help='echo "adb -s $ADBHOSTPORT install [-r] bin/*.apk"'
 alias adbinstall='$ADBCON_SH && adb -s $ADBHOSTPORT install'
 alias adbkillemu='$ADBCON_SH && adb -s emulator-5554 device kill'
 
@@ -134,7 +138,7 @@ alias adbshell='$ADBCON_SH && adb -s $ADBHOSTPORT shell'
 alias adbreboot='adbshell "reboot"'
 alias adbrmdata='adbshell "rm -rf /data; reboot"'
 alias adblist='adbshell ps'
-alias amstarthelp='echo "Usage:   am start [-a ACTION] [-d DATA] [-t TYPE] [-n COMPONENT]"; echo "Example: am start -a android.intent.action.VIEW -d file:///mnt/sdcard/DCIM/Camera/video-2010-08-20-08-49-48.mp4 -t video/mp4 -n com.sec.android.app.videoplayer/.activity.MoviePlayer"'
+alias amstart.help='echo "Usage:   am start [-a ACTION] [-c CATEGORY] [-d DATA] [-t TYPE] [-n COMPONENT]"; echo "Example: am start -a android.intent.action.VIEW -d file:///mnt/sdcard/DCIM/Camera/video-2010-08-20-08-49-48.mp4 -t video/mp4 -n com.sec.android.app.videoplayer/.activity.MoviePlayer"'
 alias amstart='adbshell am start'
 alias adbsql='adbshell "sqlite3"'
 alias adbsqldump='adbsql /data/data/com.android.providers.media/databases/external.db .dump'
@@ -146,9 +150,9 @@ alias getomx='adbshell getprop media.moo.others'
 alias activities='$ADBCON_SH && $REPEAT_SH 1 adb -s $ADBHOSTPORT shell dumpsys activity activities | grep Run'
 alias killprocess='$KILLPROCESS_SH'
 
-alias createapphelp='echo "Example: android create project -n ProjectName -t 1 -p ./projectname -k com.example.projectname -a ProjectActivity"; android --help create project'
+alias createapp.help='echo "Example: android create project -n ProjectName -t 1 -p ./projectname -k com.example.projectname -a ProjectActivity"; android --help create project'
 alias createapp='android create project'
-alias updateapphelp='echo "Example: android update project -l $TOOL_MOUNTED/android-sdk-linux/platforms/android-11 -p ./projectname"; android --help update project'
+alias updateapp.help='echo "Example: android update project -l $TOOL_MOUNTED/android-sdk-linux/platforms/android-11 -p ./projectname"; android --help update project'
 alias updateapp='android update project'
 
 alias eclipse='$ADT_BUNDLE/eclipse/eclipse -vm $TOOL_MOUNTED/jdk1.6.0_33/bin &'
@@ -161,13 +165,16 @@ alias lunch.aosp.master='cd $AOSPDIR/master; . build/envsetup.sh; lunch full-eng
 alias lunch.aosp.jb-mr1-dev='cd $AOSPDIR/jb-mr1-dev; . build/envsetup.sh; lunch full-eng; source.devsetup'
 alias lunch.aosp.android-4.2.1_r1='cd $AOSPDIR/android-4.2.1_r1; . build/envsetup.sh; lunch full-eng; source.devsetup'
 
-alias lunch.tv.gitcorp_2='cd $GOOGLETVDIR/gitcorp_2; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
+alias lunch.gtv.3.0.cosmo='cd $GOOGLETVDIR/gitcorp_2; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
 
-alias lunch.tv.gtv-4.0-jb-mr0=' cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; '
-alias build.tv.gtv-4.0-jb-mr0=' cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; makewithlog; makeotawithlog; gtv_reinstall'
-alias night.tv.gtv-4.0-jb-mr0=' cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; repo sync -j20; makewithlog; makeotawithlog; '
+alias lunch.gtv.4.0-mr0='cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; '
+alias build.gtv.4.0-mr0='cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; makewithlog; makeotawithlog; gtv_reinstall'
+alias night.gtv.4.0-mr0='cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; repo sync -j20; makewithlog; makeotawithlog; '
+alias lunch.gtv.4.0-mr0.berlin='cd $GOOGLETVDIR/gtv-4.0-jb-mr0.berlin; . build/envsetup.sh; lunch berlin-eng; source.devsetup; '
+alias build.gtv.4.0-mr0.berlin='cd $GOOGLETVDIR/gtv-4.0-jb-mr0.berlin; . build/envsetup.sh; lunch berlin-eng; source.devsetup; makewithlog; makeotawithlog; gtv_reinstall'
+alias night.gtv.4.0-mr0.berlin='cd $GOOGLETVDIR/gtv-4.0-jb-mr0.berlin; . build/envsetup.sh; lunch berlin-eng; source.devsetup; repo sync -j20; makewithlog; makeotawithlog; '
 
-alias lunch.tv.gtv-4.0-jb-mr1=' cd $GOOGLETVDIR/gtv-4.0-jb-mr1; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; '
+alias lunch.gtv.4.0-mr1='cd $GOOGLETVDIR/gtv-4.0-jb-mr1; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; '
 
 alias deletelog='echo "delete logfiles below..."; ll make_*.log 2>/dev/null; rm ./make_*.log; echo "remained logfiles below..."; find . -name "make_*.log"'
 alias makewithlog='$MAKEWITHLOG_SH'
@@ -226,7 +233,7 @@ gotolg0; whatamidoingnow;
 gotolgv3.0; whatamidoingnow; 
 '
 
-alias checkremotehelp='echo "repo start checkremote ."; echo "git remote update"; echo "git branch -a"; echo "git diff checkremote remotes/m/master"; echo "repo abandon checkremote"'
+alias checkremote.help='echo "repo start checkremote ."; echo "git remote update"; echo "git branch -a"; echo "git diff checkremote remotes/m/master"; echo "repo abandon checkremote"'
 alias checkremote='repo start checkremote .; git remote update; git branch -a; git diff checkremote remotes/m/master; repo abandon checkremote'
 
 
@@ -242,5 +249,8 @@ alias findtest='$FINDTEST_SH'
 alias listtest='runtest -l'
 
 alias chrome='google-chrome'
+
+alias test.launchHome='amstart -a android.intent.action.MAIN -c android.intent.category.HOME -n com.google.tv.launcher/.HomeActivity'
+alias test.onBoot='amstart -a android.intent.action.BOOT_COMPLETED -f 0x00000010'
 
 echo ~/.envsetup/$os/devsetup.sh sourced!!!

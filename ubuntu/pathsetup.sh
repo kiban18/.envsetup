@@ -7,6 +7,7 @@ if [[ "$TOOL_MOUNTED" != "" ]]; then
     PATH=$TOOL_MOUNTED/jdk1.6.0_33/bin:$PATH
     PATH=$PATH:$TOOL_MOUNTED/android-sdk-linux/platform-tools
     PATH=$PATH:$TOOL_MOUNTED/android-sdk-linux/tools
+    PATH=$PATH:$TOOL_MOUNTED/android-ndk-r8c
     PATH=$PATH:$TOOL_MOUNTED/eclipse
     PATH=$PATH:$TOOL_MOUNTED/argouml-0.34
 fi
