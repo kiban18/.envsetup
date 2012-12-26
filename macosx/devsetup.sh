@@ -65,7 +65,7 @@ function ls.component.owners()
   DEBUG_echo "check AllBinaries"
   for i in $AllBinaries; do
     DEBUG_echo "i: $i"
-    result=`ls.so.needed $i | grep $Target`
+    result=`ls.so.needed $i | grep "\<$Target\>"`
     if [ $? == 0 ]; then
       echo $i | sed -e "s/^.*system/ system/"
     fi
@@ -73,7 +73,7 @@ function ls.component.owners()
   DEBUG_echo "check AllLibraries"
   for i in $AllLibraries; do
     DEBUG_echo "i: $i"
-    result=`ls.so.needed $i | grep $Target`
+    result=`ls.so.needed $i | grep "\<$Target\>"`
     if [ $? == 0 ]; then
       echo $i | sed -e "s/^.*system/ system/"
     fi
