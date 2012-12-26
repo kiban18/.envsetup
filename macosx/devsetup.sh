@@ -50,7 +50,7 @@ function ls.so.needed()
   DEBUG_echo "FullPath: $FullPath"
   for i in `find $T -name $Target`; do
   DEBUG_echo "i: $i"
-    $ANDROID_TOOLCHAIN/arm-linux-androideabi-readelf -Wa $i 2>/dev/null | grep NEEDED | sed -e "s/^.*library: / /"
+    $ANDROID_TOOLCHAIN/arm-linux-androideabi-readelf -Wa $i 2>/dev/null | grep NEEDED | sed -e "s/^.*library: / /" | sort
   done
 }
 
