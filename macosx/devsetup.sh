@@ -36,39 +36,57 @@ function alias.function() {
   echo "all function : $A"
 }
 
-function ls.so.needed()
+function DEBUG_echo()
 {
-  $ANDROID_TOOLCHAIN/arm-linux-androideabi-readelf -Wa "$@" 2>/dev/null | grep NEEDED | sed -e "s/^.*library: / /"
+  #echo $@
+  echo $@ 1>/dev/null
 }
 
-function ls.so.owners()
+function ls.so.needed()
 {
+  local Target=`echo $@ | sed -e "s/^.*\///"`
+  local T=$OUT/system
+  local FullPath=`find $T -name $Target`
+  DEBUG_echo "FullPath: $FullPath"
+  for i in `find $T -name $Target`; do
+  DEBUG_echo "i: $i"
+    $ANDROID_TOOLCHAIN/arm-linux-androideabi-readelf -Wa $i 2>/dev/null | grep NEEDED | sed -e "s/^.*library: / /"
+  done
+}
+
+function ls.component.owners()
+{
+  local Target=`echo $@ | sed -e "s/^.*\///"`
   local T=$OUT/system
   local Tbin=$T/bin
   local Tlib=$T/lib
   local AllBinaries=`find $Tbin -type f`
   local AllLibraries=`find $Tlib -name "*.so"`
+  DEBUG_echo "check AllBinaries"
   for i in $AllBinaries; do
-    result=`ls.so.needed $i | grep $@`
+    DEBUG_echo "i: $i"
+    result=`ls.so.needed $i | grep $Target`
     if [ $? == 0 ]; then
       echo $i | sed -e "s/^.*system/ system/"
     fi
   done
+  DEBUG_echo "check AllLibraries"
   for i in $AllLibraries; do
-    result=`ls.so.needed $i | grep $@`
+    DEBUG_echo "i: $i"
+    result=`ls.so.needed $i | grep $Target`
     if [ $? == 0 ]; then
       echo $i | sed -e "s/^.*system/ system/"
     fi
   done
 }
 
-function ls.so.relation()
+function ls.component.relation()
 {
   echo ""
-  echo "*** Owners of the library $@"
-  ls.so.owners $@
+  echo "*** Owners of the component $@"
+  ls.component.owners $@
   echo ""
-  echo "*** Llibrary $@ needs..."
+  echo "*** Component $@ needs shared libraries below..."
   ls.so.needed $@
   echo ""
 }
