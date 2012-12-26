@@ -9,8 +9,8 @@ fi
 
 adt_bundle_mac=/Applications/adt-bundle-mac
 if [[ "$adt_bundle_mac" != "" ]]; then
-    export PATH=$PATH:$adt_bundle_mac/sdk/tools
     export PATH=$PATH:$adt_bundle_mac/sdk/platform-tools
+    export PATH=$PATH:$adt_bundle_mac/sdk/tools
     export PATH=$PATH:$adt_bundle_mac/android-ndk-r8c
 fi
 
