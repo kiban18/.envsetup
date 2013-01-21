@@ -10,7 +10,8 @@ set smartindent " 좀더 똑똑한 들여쓰기를 위한 옵션이다.
 set nowrapscan " 검색할 때 문서의 끝에서 다시 처음으로 돌아가지 않는다.
 set nobackup " 백업 파일을 만들지 않는다.
 set visualbell " 키를 잘못눌렀을 때 삑 소리를 내는 대신 번쩍이게 한다.
-set nu " 줄번호를 보여준다.
+set nu " show line number
+set ai " auto indent
 set tabstop=2 " Tab을 눌렀을 때 8칸 대신 2칸 이동하도록 한다.
 set shiftwidth=2 " 자동 들여쓰기를 할때 2칸 들여쓰도록 한다.
 set background=dark
@@ -44,31 +45,6 @@ if has("syntax")
 syntax on " Default to no syntax highlightning 
 endif
 
-" ctags
-"set complete " 계속하려면 엔터 혹은 명령을 입력하십시오, complete=.,w,b,u,t,i 출력 오류!!
-set tagbsearch
-set tags=tags,,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags,../../../../../../tags,../../../../../../../tags,../../../../../../../../tags,../../../../../../../../../tags,../../../../../../../../../../tags,../../../../../../../../../../../tags,../../../../../../../../../../../../tags,../../../../../../../../../../../../../tags,../../../../../../../../../../../../../../tags,../../../../../../../../../../../../../../../tags,../../../../../../../../../../../../../../../../tags,../../../../../../../../../../../../../../../../../tags,../../../../../../../../../../../../../../../../../../tags,../../../../../../../../../../../../../../../../../../../tags,
-
-"function! s:search_file_in_parent_dir(filename)
-"  let dir=expand("`pwd`")
-"  let fname = "/" . a:filename
-"    while dir != "/"
-"      if filereadable(dir . fname) | return dir . fname | endif
-"      let i = match(dir, "/[^/]*$") | if  i == -1 | break | endif
-"      let dir = strpart(dir, 0, i)
-"  endwhile
-"  return ""
-"endfunction
-"
-"function! s:load_tags()
-"  let tag_file = s:search_file_in_parent_dir("tags")
-"  if filereadable(tag_file)
-"    "set tagrelative
-"    execute "set tags=" . tag_file
-"  endif
-"endfunction
-"
-"au BufEnter *.[ch] call s:load_tags()
 
 " Vundle Setting
 set rtp+=~/.vim/bundle/vundle/
@@ -79,10 +55,10 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 "My Bundles here:
-Bundle 'git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git'
-Bundle 'git://github.com/vim-scripts/The-NERD-tree.git'
 Bundle 'git://github.com/vim-scripts/taglist.vim.git'
-Bundle 'git://github.com/vim-scripts/trinity.vim.git'
+Bundle 'git://github.com/vim-scripts/The-NERD-tree.git'
+Bundle 'git://github.com/vim-scripts/SrcExpl.git'
+Bundle 'git://github.com/vim-scripts/Trinity.git'
 
 filetype plugin indent on "required!
 "
@@ -142,7 +118,8 @@ map <ESC><ESC><ESC> :q!<CR>
 map <F2> v]}zf
 map <F3> zo
 
-map <F5> :Tlist<CR><C-W><C-W>
+"map <F5> :Tlist<CR><C-W><C-W>
+map <F5> :Tlist<CR><C-W><C-W> <C-Right> <C-Right> <C-Right> <C-Right> <C-Right> <C-Right>
 map <F6> :NERDTreeToggle<CR> 
 map <F7> :SrcExplToggle<CR> 
 
@@ -189,130 +166,25 @@ nmap <C-L> <C-W>l
 "autocmd BufEnter * silent! lcd %:p:h:gs/ /\\/
 
 "set tags=./tags;/.
+" ctags
+"set complete " 계속하려면 엔터 혹은 명령을 입력하십시오, complete=.,w,b,u,t,i 출력 오류!!
+"set tagbsearch
+" Vim will look for tags file everywhere starting from the current directory up to the root
+set tags=tags;/
 
-function CsAddCscopeOut()
-    let Root = getcwd()
-    let CscopeOut = "cscope.out"
-    let i = 0
-    while i < 20
-        if filereadable(CscopeOut)
-            set nocsverb
-            "exe "pwd"
-            let CscopeOutFullPath = Root."/".CscopeOut
-            cs add CscopeOutFullPath
-            set csverb
-            break
-        endif
-        let i = i + 1
-        let CscopeOut = "../".CscopeOut
-    endwhile
+" Vim will look for cscope.out file everywhere starting from the current directory up to the root
+" http://vim.wikia.com/wiki/Autoloading_Cscope_Database
+function! LoadCscope()
+    let db = findfile("cscope.out", ".;")
+    if (!empty(db))
+        let path = strpart(db, 0, match(db, "/cscope.out$"))
+        set nocscopeverbose " suppress 'duplicate connection' error
+        exe "cs add " . db . " " . path
+        set cscopeverbose
+    endif
 endfunction
-"call CsAddCscopeOut()
-
-let DEBUG = "false"
-"let DEBUG = "true"
-
-if filereadable("cscope.out")
-    cs add cscope.out
-    if DEBUG=="true"
-        echo "[00] cs add cscope.out"
-    endif
-elseif filereadable("../cscope.out")
-    cs add ../cscope.out
-    if DEBUG=="true"
-        echo "[01] cs add ../cscope.out"
-    endif
-elseif filereadable("../../cscope.out")
-    cs add ../../cscope.out
-    if DEBUG=="true"
-        echo "[02] cs add ../../cscope.out"
-    endif
-elseif filereadable("../../../cscope.out")
-    cs add ../../../cscope.out
-    if DEBUG=="true"
-        echo "[03] cs add ../../../cscope.out"
-    endif
-elseif filereadable("../../../../cscope.out")
-    cs add ../../../../cscope.out
-    if DEBUG=="true"
-        echo "[04] cs add ../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../cscope.out")
-    cs add ../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[05] cs add ../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../cscope.out")
-    cs add ../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[06] cs add ../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../cscope.out")
-    cs add ../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[07] cs add ../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../cscope.out")
-    cs add ../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[08] cs add ../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[09] cs add ../../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[10] cs add ../../../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[11] cs add ../../../../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[12] cs add ../../../../../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[13] cs add ../../../../../../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[14] cs add ../../../../../../../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[15] cs add ../../../../../../../../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[16] cs add ../../../../../../../../../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[17] cs add ../../../../../../../../../../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[18] cs add ../../../../../../../../../../../../../../../../../../cscope.out"
-    endif
-elseif filereadable("../../../../../../../../../../../../../../../../../../../cscope.out")
-    cs add ../../../../../../../../../../../../../../../../../../../cscope.out
-    if DEBUG=="true"
-        echo "[19] cs add ../../../../../../../../../../../../../../../../../../../cscope.out"
-    endif
-endif
+call LoadCscope()
+"au BufEnter /* call LoadCscope()
 
 
 if version >= 500
@@ -352,14 +224,23 @@ nmap ,tl :call Tl()<CR>
 endif
 
 "======== cscope setting ========
-set csprg=/usr/bin/cscope
-set csto=0
-set cst
+" for ubuntu
+"set csprg=/usr/bin/cscope
+" for macosx
+set csprg=/opt/local/bin/cscope " cscope location
+set csto=0 " cscope DB search first
+set cst " cscope DB tag DB search
+set nocsverb " verbose off
 
 func! CscopeShow()
 exe "cs show"
 endfunc
 nmap ,w :call CscopeShow()<CR>
+
+func! CscopeHelp()
+exe "cs help"
+endfunc
+nmap ,h :call CscopeHelp()<CR>
 
 " calls: find all calls to the function name under cursor
 "       c: 이 함수를 부르는 함수들 찾기

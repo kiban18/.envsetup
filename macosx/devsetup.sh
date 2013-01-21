@@ -5,6 +5,7 @@ PS1="\[\e[0;34m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \`ruby -e \"print (%x{git 
 export BUILD_MAC_SDK_EXPERIMENTAL=1
 
 export android=/Volumes/android
+export kernel=$android/kernel
 export aosp=$android/aosp
 export doc=$android/doc
 export tool=$android/tool
@@ -22,10 +23,18 @@ alias ls.skins='l $skindir'
 alias emulator.build='$emulator_cmd_common'
 alias emulator.build.skin='$emulator_cmd_common -skindir $skindir -skin '
 
-alias make.ctags='ctags -B -F -R --exclude="^out"'
+alias make.ctags='ctags -B -F -R --languages=C,C++,Sh,Make --exclude="^out"'
 alias make.cscope='$envsetup/makecscope.sh'
 alias make.filelist='rm filelist'
 alias make.allDBs='make.ctags; make.cscope; make.filelist'
+
+alias cp.userdata='cp $aosp/android-4.2.1_r1/out/target/product/generic/userdata.img .'
+
+alias mmwithlog='time mm -j8 2>&1 | tee make_mm_build.log'
+alias pushapk='$PUSHAPK_SH'
+alias pushjar='$PUSHJAR_SH'
+alias do_apk_at_once='mmwithlog && pushapk'
+alias do_jar_at_once='mmwithlog && pushjar'
 
 function alias.function() {
   local T=~/.envsetup
@@ -75,20 +84,28 @@ function ls.component.owners()
     DEBUG_echo "i: $i"
     result=`ls.so.needed $i | grep "\<$Target\>"`
     if [ $? == 0 ]; then
-      echo $i | sed -e "s/^.*system/ system/"
+      DEBUG_echo $i
+      echo $i | sed -e "s/^.*\/system/ system/"
     fi
   done
 }
 
 function ls.component.relation()
 {
-  echo ""
-  echo "*** Owners of the component $@"
-  ls.component.owners $@
-  echo ""
-  echo "*** Component $@ needs shared libraries below..."
-  ls.so.needed $@
-  echo ""
+  if [ $# = 1 ]; then
+    echo ""
+    echo "*** Owners of the component $@"
+    ls.component.owners $@
+    echo ""
+    echo "*** Component $@ needs shared libraries below..."
+    ls.so.needed $@
+    echo ""
+  else
+    echo "function ls.component.relation"
+    echo "Usage: ls.component.relation shared_library (or executable)"
+    echo "    example) ls.component.relation mediaserver"
+    echo "    example) ls.component.relation libaudioflinger.so"
+  fi
 }
 
 echo ~/.envsetup/$os/devsetup.sh sourced!!!
