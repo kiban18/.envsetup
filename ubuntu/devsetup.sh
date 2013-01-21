@@ -4,7 +4,8 @@ export ADBHOST=172.30.117.88
 export ADBHOSTPORT=$ADBHOST:5555
 
 export HOME_MOUNTED=/usr/local/google/home/kihwanl
-export WORK_MOUNTED=$HOME_MOUNTED/work2
+export WORK_MOUNTED=/media/work2
+#export WORK_MOUNTED=$HOME_MOUNTED/work2
 export ENVSETUP=~/.envsetup
 
 export TOOL_MOUNTED=$WORK_MOUNTED/tool
@@ -182,7 +183,7 @@ alias makeotawithlog='$MAKEOTAWITHLOG_SH'
 alias gtv_reinstall='$GTV_REINSTALL_SH'
 alias do_all_at_once='$DO_ALL_AT_ONCE_SH'
 
-export kernel=/usr/local/google/home/kihwanl/work2/tool/adt-bundle-linux/sdk/system-images/android-17/armeabi-v7a/kernel-qemu
+export kernel=${WORK_MOUNTED}/tool/adt-bundle-linux/sdk/system-images/android-17/armeabi-v7a/kernel-qemu
 alias emulator.avd='emulator -kernel $kernel -system $OUT/system.img -datadir $OUT/userdata.img -ramdisk $OUT/ramdisk.img'
 export system_images=/home/kihwanl/tool/adt-bundle-linux/sdk/system-images/android-16/armeabi-v7a
 export system_images_org=/home/kihwanl/tool/adt-bundle-linux/sdk/system-images/android-16.org/armeabi-v7a
