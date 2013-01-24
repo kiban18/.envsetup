@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export ADBHOST=172.30.117.88
+export ADBHOST=172.30.117.185
 export ADBHOSTPORT=$ADBHOST:5555
 
 export HOME_MOUNTED=/usr/local/google/home/kihwanl
@@ -168,14 +168,16 @@ alias lunch.aosp.android-4.2.1_r1='cd $AOSPDIR/android-4.2.1_r1; . build/envsetu
 
 alias lunch.gtv.3.0.cosmo='cd $GOOGLETVDIR/gitcorp_2; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
 
-alias lunch.gtv.4.0-mr0='cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; '
+alias lunch.gtv.4.0-mr0='cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup'
 alias build.gtv.4.0-mr0='cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; makewithlog; makeotawithlog; gtv_reinstall'
-alias night.gtv.4.0-mr0='cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; repo sync -j20; makewithlog; makeotawithlog; '
-alias lunch.gtv.4.0-mr0.berlin='cd $GOOGLETVDIR/gtv-4.0-jb-mr0.berlin; . build/envsetup.sh; lunch berlin-eng; source.devsetup; '
+alias night.gtv.4.0-mr0='cd $GOOGLETVDIR/gtv-4.0-jb-mr0; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; repo sync -j20; makewithlog; makeotawithlog'
+alias lunch.gtv.4.0-mr0.berlin='cd $GOOGLETVDIR/gtv-4.0-jb-mr0.berlin; . build/envsetup.sh; lunch berlin-eng; source.devsetup'
 alias build.gtv.4.0-mr0.berlin='cd $GOOGLETVDIR/gtv-4.0-jb-mr0.berlin; . build/envsetup.sh; lunch berlin-eng; source.devsetup; makewithlog; makeotawithlog; gtv_reinstall'
-alias night.gtv.4.0-mr0.berlin='cd $GOOGLETVDIR/gtv-4.0-jb-mr0.berlin; . build/envsetup.sh; lunch berlin-eng; source.devsetup; repo sync -j20; makewithlog; makeotawithlog; '
+alias night.gtv.4.0-mr0.berlin='cd $GOOGLETVDIR/gtv-4.0-jb-mr0.berlin; . build/envsetup.sh; lunch berlin-eng; source.devsetup; repo sync -j20; makewithlog; makeotawithlog'
 
-alias lunch.gtv.4.0-mr1='cd $GOOGLETVDIR/gtv-4.0-jb-mr1; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; '
+alias lunch.gtv-4.0-aosp-jb-mr1='cd $GOOGLETVDIR/gtv-4.0-aosp-jb-mr1; . build/envsetup.sh; lunch cosmo-eng; source.devsetup'
+alias build.gtv-4.0-aosp-jb-mr1='cd $GOOGLETVDIR/gtv-4.0-aosp-jb-mr1; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; makewithlog; makeotawithlog; gtv_reinstall'
+alias night.gtv-4.0-aosp-jb-mr1='cd $GOOGLETVDIR/gtv-4.0-aosp-jb-mr1; . build/envsetup.sh; lunch cosmo-eng; source.devsetup; repo sync -j20; makewithlog; makeotawithlog'
 
 alias deletelog='echo "delete logfiles below..."; ll make_*.log 2>/dev/null; rm ./make_*.log; echo "remained logfiles below..."; find . -name "make_*.log"'
 alias makewithlog='$MAKEWITHLOG_SH'
@@ -200,23 +202,6 @@ alias pushapk='$PUSHAPK_SH'
 alias pushjar='$PUSHJAR_SH'
 alias do_apk_at_once='mmwithlog && pushapk'
 alias do_jar_at_once='mmwithlog && pushjar'
-
-# for gtv v2.1 M4
-alias lunchgitv2.1='cd $GITV2DOT1DIR; . build/envsetup.sh; lunch fishtank-eng; source.envsetup'
-alias gtv_reinstallv2.1='$ADBCON_SH && vendor/intel/build/gtv_reinstall.sh $OUT/$TARGET_PRODUCT-ota-$TARGET_BUILD_VARIANT.$USER.zip $ADBHOST'
-
-# for gtv v3.0
-alias lunchgitv3.0='cd $GITV3DOT0DIR; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-#alias gtv_reinstallv3.0='$ADBCON_SH && vendor/intel/build/gtv_reinstall.sh $OUT/$TARGET_PRODUCT-ota-$TARGET_BUILD_VARIANT.$USER.zip $ADBHOST'
-
-# for gtv v4.0
-alias lunchgitv4.0='cd $GITV4DOT0DIR; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-#alias gtv_reinstallv4.0='$ADBCON_SH && vendor/intel/build/gtv_reinstall.sh $OUT/$TARGET_PRODUCT-ota-$TARGET_BUILD_VARIANT.$USER.zip $ADBHOST'
-
-
-# for lg v3.0
-alias lunchlgv3.0='cd $LGV3DOT0DIR; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
-#alias gtv_reinstallv3.0='$ADBCON_SH && vendor/intel/build/gtv_reinstall.sh $OUT/$TARGET_PRODUCT-ota-$TARGET_BUILD_VARIANT.$USER.zip $ADBHOST'
 
 
 # for debug
