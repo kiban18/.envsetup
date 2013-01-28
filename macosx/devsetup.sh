@@ -23,6 +23,23 @@ alias ls.skins='l $skindir'
 alias emulator.build='$emulator_cmd_common'
 alias emulator.build.skin='$emulator_cmd_common -skindir $skindir -skin '
 
+key_ams_wait=kapg.debug.ams.wait
+alias emulator.build.debug.ams='$emulator_cmd_common -prop ${key_ams_wait}=true'
+alias adbshell.getprop.ams.wait='adb shell getprop ${key_ams_wait}'
+alias adbshell.setprop.ams.wait.true='adb shell setprop ${key_ams_wait} true'
+alias adbshell.setprop.ams.wait.false='adb shell setprop ${key_ams_wait} false'
+alias getprop.ams.wait='adb shell getprop ${key_ams_wait}'
+alias setprop.ams.wait.true='adb shell setprop ${key_ams_wait} true'
+alias setprop.ams.wait.false='adb shell setprop ${key_ams_wait} false'
+
+key_pkgname=kapg.debug.pkgname
+alias emulator.build.debug.pkgname='$emulator_cmd_common -prop ${key_pkgname}'
+alias adbshell.getprop.pkgname='adb shell getprop ${key_pkgname}'
+alias adbshell.setprop.pkgname.to='adb shell setprop ${key_pkgname} '
+alias getprop.pkgname='adb shell getprop ${key_pkgname}'
+alias setprop.pkgname.to='adb shell setprop ${key_pkgname} '
+
+
 alias make.ctags='ctags -B -F -R --languages=C,C++,Sh,Make --exclude="^out"'
 alias make.cscope='$envsetup/makecscope.sh'
 alias make.filelist='rm filelist'
