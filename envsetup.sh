@@ -8,6 +8,8 @@ case $OSTYPE in
 esac
 
 envsetup=~/.envsetup
+rum=$envsetup/rum
+
 envsetup_sh=$envsetup/envsetup.sh
 devsetup_sh=$envsetup/$os/devsetup.sh
 pathsetup_sh=$envsetup/$os/pathsetup.sh
@@ -27,6 +29,14 @@ alias vivimrc='vim $vimrc'
 alias vigitconfig='vim $gitconfig'
 
 alias e='exit'
+
+alias con='bash $rum/gtv_connect_rumserver_via_ssh.sh'
+alias mnt='. $rum/gtv_mount_rumserver_my_home.sh'
+alias remnt='. $rum/gtv_remount_rumserver_my_home.sh'
+alias gtvlog='bash $rum/gtv_logcat_via_telnet.sh'
+alias myboard='bash $rum/gtv_set_myboard.sh'
+alias activities='adbcon; ./repeat.sh 1 adb shell dumpsys activity activities | grep Run'
+alias killactivity='bash $rum/gtv_kill_activity_via_adb.sh'
 
 alias ls='ls -G'
 alias l='ls -l'
