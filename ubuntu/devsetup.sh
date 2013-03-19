@@ -60,6 +60,16 @@ export USE_CCACHE=1
 #export GDB=$GOOGLETVDIR/gitcorp_2/prebuilt/linux-x86_64/toolchain/arm-unknown-linux-gnueabi-4.5.3-glibc/bin/arm-unknown-linux-gnueabi-gdb
 export GDB=$GOOGLETVDIR/gitv4.0/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-gdb
 
+export adt_bundle_ubuntu=$TOOL_MOUNTED/android-adt/adt-bundle-linux-x86_64-20130219
+export sdk=$adt_bundle_ubuntu/sdk
+export skindir=$sdk/platforms/android-16/skins
+sdcard=~/.android/sdcard.img
+keyset=~/.android/default.keyset
+emulator_cmd_common="emulator -sysdir $OUT -data $OUT/userdata.img -sdcard $sdcard -memory 1024 -gpu on -camera-front webcam0"
+alias ls.skins='l $skindir'
+alias emulator.build='$emulator_cmd_common'
+alias emulator.build.skin='$emulator_cmd_common -skindir $skindir -skin '
+
 alias agdb='$GDB'
 
 alias vijdbrc='vi $ENVSETUP/.jdbrc'

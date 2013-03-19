@@ -1,7 +1,7 @@
 #!/bin/bash
 
 RUM_HOME=/home/kiban18/rum/home
-GTV_SCRIPT=envsetup/gtv_v2_setup.sh
+GTV_SCRIPT=.envsetup/gtv_v2_setup.sh
 
 HAS_MOUNTED=`mount | grep rum/home`
 if [ "${HAS_MOUNTED}" ]; then
