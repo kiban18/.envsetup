@@ -16,6 +16,21 @@ if [ "$os" == "macosx" ]; then
 
 	# set the number of open files to be 1024
 	#ulimit -S -n 1024
+
+    envsetup=~/.envsetup/envsetup.sh
+    if [ -f $envsetup ]; then
+        . $envsetup
+    fi
+
+    devsetup=~/.envsetup/$os/devsetup.sh
+    if [ -f $devsetup ]; then
+        . $devsetup
+    fi
+
+    pathsetup=~/.envsetup/$os/pathsetup.sh
+    if [ -f $pathsetup ]; then
+        . $pathsetup
+    fi
 fi
 
 if [ "$os" == "ubuntu" ]; then
@@ -31,19 +46,4 @@ if [ "$os" == "ubuntu" ]; then
     if [ -d "$HOME/bin" ] ; then
         PATH="$HOME/bin:$PATH"
     fi
-fi
-
-envsetup=~/.envsetup/envsetup.sh
-if [ -f $envsetup ]; then
-    . $envsetup
-fi
-
-devsetup=~/.envsetup/$os/devsetup.sh
-if [ -f $devsetup ]; then
-    . $devsetup
-fi
-
-pathsetup=~/.envsetup/$os/pathsetup.sh
-if [ -f $pathsetup ]; then
-    . $pathsetup
 fi
