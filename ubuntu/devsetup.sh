@@ -3,8 +3,9 @@
 export ADBHOST=172.30.117.185
 export ADBHOSTPORT=$ADBHOST:5555
 
-export HOME_MOUNTED=/usr/local/google/home/kihwanl
-export WORK_MOUNTED=/media/work2
+#export HOME_MOUNTED=/usr/local/google/home/kihwanl
+#export WORK_MOUNTED=/media/work2
+export WORK_MOUNTED=~/work
 #export WORK_MOUNTED=$HOME_MOUNTED/work2
 export ENVSETUP=~/.envsetup
 
@@ -165,6 +166,7 @@ alias lunch.android.jb-mr1-aah-dev='cd $ANDROIDDIR/jb-mr1-aah-dev; . build/envse
 alias lunch.aosp.master='cd $AOSPDIR/master; . build/envsetup.sh; lunch full-eng; source.devsetup'
 alias lunch.aosp.jb-mr1-dev='cd $AOSPDIR/jb-mr1-dev; . build/envsetup.sh; lunch full-eng; source.devsetup'
 alias lunch.aosp.android-4.2.1_r1='cd $AOSPDIR/android-4.2.1_r1; . build/envsetup.sh; lunch full-eng; source.devsetup'
+alias lunch.aosp.android-4.2.2_r1='cd $AOSPDIR/android-4.2.2_r1; . build/envsetup.sh; lunch full-eng; source.devsetup'
 
 alias lunch.gtv.3.0.cosmo='cd $GOOGLETVDIR/gitcorp_2; . build/envsetup.sh; lunch cosmo-eng; source.envsetup'
 
