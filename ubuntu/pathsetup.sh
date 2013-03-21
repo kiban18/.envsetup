@@ -4,12 +4,12 @@
 PATH=${PATH/\/usr\/local\/buildtools\/java\/jdk\/bin:/}
 
 if [[ "$TOOL_MOUNTED" != "" ]]; then
-    PATH=$TOOL_MOUNTED/jdk1.6.0_33/bin:$PATH
-    PATH=$PATH:$TOOL_MOUNTED/android-sdk-linux/platform-tools
-    PATH=$PATH:$TOOL_MOUNTED/android-sdk-linux/tools
-    PATH=$PATH:$TOOL_MOUNTED/android-ndk-r8c
-    PATH=$PATH:$TOOL_MOUNTED/eclipse
-    PATH=$PATH:$TOOL_MOUNTED/argouml-0.34
+#    PATH=$TOOL_MOUNTED/jdk1.6.0_33/bin:$PATH
+    PATH=$PATH:$TOOL_MOUNTED/android-adt/adt-bundle-linux-x86_64-20130219/sdk/platform-tools
+    PATH=$PATH:$TOOL_MOUNTED/android-adt/adt-bundle-linux-x86_64-20130219/sdk/tools
+    PATH=$PATH:$TOOL_MOUNTED/android-ndk/android-ndk-r8d
+    PATH=$PATH:$TOOL_MOUNTED/android-adt/adt-bundle-linux-x86_64-20130219/eclipse
+    PATH=$PATH:$TOOL_MOUNTED/argouml/argouml-0.34
 fi
 
 if [[ "$ENVSETUP" != "" ]]; then

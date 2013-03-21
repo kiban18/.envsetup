@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export ADBHOST=172.30.117.185
-export ADBHOSTPORT=$ADBHOST:5555
+#export ADBHOST=172.30.117.185
+#export ADBHOSTPORT=$ADBHOST:5555
 
 #export HOME_MOUNTED=/usr/local/google/home/kihwanl
 #export WORK_MOUNTED=/media/work2
@@ -10,7 +10,7 @@ export WORK_MOUNTED=~/work
 export ENVSETUP=~/.envsetup
 
 export TOOL_MOUNTED=$WORK_MOUNTED/tool
-export SOURCEDIR=$WORK_MOUNTED/source
+export SOURCEDIR=$WORK_MOUNTED/source/android
 
 export AOSPDIR=$SOURCEDIR/aosp
 export ANDROIDDIR=$SOURCEDIR/android
@@ -108,8 +108,11 @@ alias gotolgv3.0='. $GOTOWITHTHESAMEDEPTH_SH lgv3.0'
 
 alias activitiesOnce='$ADBCON_SH && adb -s $ADBHOSTPORT shell dumpsys activity activities | grep Run'
 alias activities='$ADBCON_SH && $REPEAT_SH 1 adb -s $ADBHOSTPORT shell dumpsys activity activities | grep Run'
+alias activities4emul='$REPEAT_SH 1 adb shell dumpsys activity activities | grep Run'
 alias logcatcolor='$ADBCON_SH && adb -s $ADBHOSTPORT logcat | $COLOR_PY'
+alias logcatcolor4emul='adb logcat | $COLOR_PY'
 alias logcattime='$ADBCON_SH && adb -s $ADBHOSTPORT logcat -v time'
+alias logcattime4emul='adb logcat -v time'
 
 alias adbcon='$ADBCON_SH'
 alias adbrecon='adb disconnect; $ADBCON_SH'
@@ -167,7 +170,7 @@ alias createapp='android create project'
 alias updateapp.help='echo "Example: android update project -l $TOOL_MOUNTED/android-sdk-linux/platforms/android-11 -p ./projectname"; android --help update project'
 alias updateapp='android update project'
 
-alias eclipse='$ADT_BUNDLE/eclipse/eclipse -vm $TOOL_MOUNTED/jdk1.6.0_33/bin &'
+#alias eclipse='eclipse -vm $TOOL_MOUNTED/jdk1.6.0_33/bin &'
 
 #alias lunch.android.master='cd $ANDROIDDIR/master; . build/envsetup.sh; lunch full-eng; source.devsetup'
 #alias lunch.android.jb-mr1.1-dev='cd $ANDROIDDIR/jb-mr1.1-dev; . build/envsetup.sh; lunch full-eng; source.devsetup'
