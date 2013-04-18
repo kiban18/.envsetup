@@ -11,10 +11,10 @@ if [[ "$PACKAGE_NAME" == "" ]]; then
   exit 1
 fi
 
-find . -name Android.mk | xargs grep "\<$PACKAGE_NAME\>" | grep $SEARCH_NAME
+find . -name Android.mk | xargs grep "\<$PACKAGE_NAME\>" | grep "\<$SEARCH_NAME\>"
 if [ $? == 0 ]; then
-  ANDROID_MK=`find . -name Android.mk | xargs grep "\<$PACKAGE_NAME\>" | grep $SEARCH_NAME | sed "s/Android.mk.*/Android.mk/"`
-  vim +/$SEARCH_NAME $ANDROID_MK
+  ANDROID_MK=`find . -name Android.mk | xargs grep "\<$PACKAGE_NAME\>" | grep "\<$SEARCH_NAME\>" | sed "s/Android.mk.*/Android.mk/"`
+  vim +/\<$SEARCH_NAME\> $ANDROID_MK
 fi
 
 exit 1
