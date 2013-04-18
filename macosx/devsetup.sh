@@ -10,43 +10,45 @@ export aosp=$android/aosp
 export doc=$android/doc
 export tool=$android/tool
 
-alias lunch.android-4.2.1_r1='cd $aosp/android-4.2.1_r1 && . build/envsetup.sh && lunch full-eng && source.devsetup'
+alias lunch.android-master='cd $aosp/android-master && . build/envsetup.sh && lunch full-eng && source.devsetup'
+alias lunch.android-4.2.2_r1='cd $aosp/android-4.2.2_r1 && . build/envsetup.sh && lunch full-eng && source.devsetup'
+alias lunch.android-2.2_r1='cd $aosp/android-2.2_r1 && . build/envsetup.sh && lunch full-eng && source.devsetup'
 
-export adt_bundle_mac=/Applications/adt-bundle-mac
+export adt_bundle_mac=/Applications/android/android-adt/adt21.1/adt-bundle-mac-x86_64
 export sdk=$adt_bundle_mac/sdk
-export skindir=$sdk/platforms/android-16/skins
+export skindir=$sdk/platforms/android-17/skins
 sdcard=~/.android/sdcard.img
 keyset=~/.android/default.keyset
-emulator_cmd_common="emulator -sysdir $OUT -data $OUT/userdata.img -sdcard $sdcard -memory 1024 -gpu on -camera-front webcam0"
+emulator_cmd_common="emulator -sysdir $OUT -data $OUT/userdata.img -memory 2048 -gpu on -camera-front webcam0"
+#emulator_cmd_common="emulator -sysdir $OUT -data $OUT/userdata.img -sdcard $sdcard -memory 1024 -gpu on -camera-front webcam0"
+#emulator_cmd_common="emulator -sysdir $OUT -data $OUT/userdata.img -sdcard $sdcard -memory 24 -gpu on -camera-front webcam0"
 #emulator_cmd_common="emulator -sysdir $OUT -data $OUT/userdata.img -sdcard $sdcard -keyset $keyset -memory 1024 -gpu on -camera-front webcam0"
-alias ls.skins='l $skindir'
+alias ls.skins='echo $skindir; l $skindir'
 alias emulator.build='$emulator_cmd_common'
 alias emulator.build.skin='$emulator_cmd_common -skindir $skindir -skin '
+alias emulator.build.skin.7in='$emulator_cmd_common -skindir $skindir -skin WXGA800-7in'
 
-key_ams_wait=kapg.debug.ams.wait
-alias emulator.build.debug.ams='$emulator_cmd_common -prop ${key_ams_wait}=true'
-alias adbshell.getprop.ams.wait='adb shell getprop ${key_ams_wait}'
-alias adbshell.setprop.ams.wait.true='adb shell setprop ${key_ams_wait} true'
-alias adbshell.setprop.ams.wait.false='adb shell setprop ${key_ams_wait} false'
-alias getprop.ams.wait='adb shell getprop ${key_ams_wait}'
-alias setprop.ams.wait.true='adb shell setprop ${key_ams_wait} true'
-alias setprop.ams.wait.false='adb shell setprop ${key_ams_wait} false'
+key_system_server_wait=kapg.debug.system_server.wait
+alias emulator.build.debug.system_server='$emulator_cmd_common -prop ${key_system_server_wait}=true'
+alias getprop.system_server.wait='adb shell getprop ${key_system_server_wait}'
+alias setprop.system_server.wait='adb shell setprop ${key_system_server_wait} '
+alias setprop.system_server.wait.false='adb shell setprop ${key_system_server_wait} false'
 
-key_pkgname=kapg.debug.pkgname
-alias emulator.build.debug.pkgname='$emulator_cmd_common -prop ${key_pkgname}'
-alias adbshell.getprop.pkgname='adb shell getprop ${key_pkgname}'
-alias adbshell.setprop.pkgname.to='adb shell setprop ${key_pkgname} '
+key_pkgname=kapg.debug.ams.pkgname
 alias getprop.pkgname='adb shell getprop ${key_pkgname}'
 alias setprop.pkgname.to='adb shell setprop ${key_pkgname} '
 
+gdb_name=ln.gdb
+alias ln.gdb='rm -f $gdb_name; ln -s $ANDROID_TOOLCHAIN/*gdb $gdb_name'
 
 alias make.ctags='ctags -B -F -R --languages=C,C++,Sh,Make --exclude="^out"'
 alias make.cscope='$envsetup/makecscope.sh'
 alias make.filelist='rm filelist'
 alias make.allDBs='make.ctags; make.cscope; make.filelist'
 
-alias cp.userdata='cp $aosp/android-4.2.1_r1/out/target/product/generic/userdata.img .'
+alias cp.userdata-4.2.2_r1='cp $aosp/android-4.2.2_r1/out/target/product/generic/userdata.img .'
 
+alias mwithlog='time m -j8 2>&1 | tee make_m_build.log'
 alias mmwithlog='time mm -j8 2>&1 | tee make_mm_build.log'
 alias pushapk='$PUSHAPK_SH'
 alias pushjar='$PUSHJAR_SH'
@@ -68,10 +70,10 @@ function DEBUG_echo()
   echo $@ 1>/dev/null
 }
 
-function ls.so.needed()
+function ls.component.needs()
 {
   local Target=`echo $@ | sed -e "s/^.*\///"`
-  local T=$OUT/system
+  local T=$OUT/symbols/system
   local FullPath=`find $T -name $Target`
   DEBUG_echo "FullPath: $FullPath"
   for i in `find $T -name $Target`; do
@@ -83,7 +85,7 @@ function ls.so.needed()
 function ls.component.owners()
 {
   local Target=`echo $@ | sed -e "s/^.*\///"`
-  local T=$OUT/system
+  local T=$OUT/symbols/system
   local Tbin=$T/bin
   local Tlib=$T/lib
   local AllBinaries=`find $Tbin -type f`
@@ -91,7 +93,7 @@ function ls.component.owners()
   DEBUG_echo "check AllBinaries"
   for i in $AllBinaries; do
     DEBUG_echo "i: $i"
-    result=`ls.so.needed $i | grep "\<$Target\>"`
+    result=`ls.component.needs $i | grep "\<$Target\>"`
     if [ $? == 0 ]; then
       echo $i | sed -e "s/^.*system/ system/"
     fi
@@ -99,7 +101,7 @@ function ls.component.owners()
   DEBUG_echo "check AllLibraries"
   for i in $AllLibraries; do
     DEBUG_echo "i: $i"
-    result=`ls.so.needed $i | grep "\<$Target\>"`
+    result=`ls.component.needs $i | grep "\<$Target\>"`
     if [ $? == 0 ]; then
       DEBUG_echo $i
       echo $i | sed -e "s/^.*\/system/ system/"
@@ -115,7 +117,7 @@ function ls.component.relation()
     ls.component.owners $@
     echo ""
     echo "*** Component $@ needs shared libraries below..."
-    ls.so.needed $@
+    ls.component.needs $@
     echo ""
   else
     echo "function ls.component.relation"
