@@ -55,10 +55,10 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 "My Bundles here:
-Bundle 'git://github.com/vim-scripts/taglist.vim.git'
-Bundle 'git://github.com/vim-scripts/The-NERD-tree.git'
-Bundle 'git://github.com/vim-scripts/SrcExpl.git'
-Bundle 'git://github.com/vim-scripts/Trinity.git'
+Bundle 'https://github.com/vim-scripts/taglist.vim.git'
+Bundle 'https://github.com/vim-scripts/The-NERD-tree.git'
+Bundle 'https://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git'
+Bundle 'https://github.com/vim-scripts/trinity.vim.git'
 
 filetype plugin indent on "required!
 "

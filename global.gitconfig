@@ -21,5 +21,5 @@
 	done = "!f() { git branch | grep "$1" | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
 	la = "!git config -l | grep alias | cut -c 7-"
 [user]
-	email = kihwanl@google.com
+	email = kiban18@gmail.com
 	name = Ki-Hwan Lee
