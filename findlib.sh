@@ -3,18 +3,18 @@
 #DEBUG=true
 DEBUG=false
 
-SEARCH_NAME=LOCAL_MODULE
-LIBRARY_NAME=$1
-if [[ "$LIBRARY_NAME" == "" ]]; then
-  echo "Usage : findlib <LIBRARY_NAME>"
-  echo "    ex) findlib libstagefright"
+SEARCH_KEY=LOCAL_MODULE
+SEARCH_NAME=$1
+if [[ "$SEARCH_NAME" == "" ]]; then
+  echo "Usage : $0 <SEARCH_NAME>"
+  echo "    ex) $0 libstagefright"
   exit 1
 fi
 
-find . -name Android.mk | xargs grep "\<$LIBRARY_NAME\>" | grep "\<$SEARCH_NAME\>"
+find . -name Android.mk | xargs grep "\<$SEARCH_NAME\>" | grep "\<$SEARCH_KEY\>"
 if [ $? == 0 ]; then
-  ANDROID_MK=`find . -name Android.mk | xargs grep "\<$LIBRARY_NAME\>" | grep "\<$SEARCH_NAME\>" | sed "s/Android.mk.*/Android.mk/"`
-  vim +/"\<$SEARCH_NAME\>.*\<$LIBRARY_NAME\>" $ANDROID_MK
+  ANDROID_MK=`find . -name Android.mk | xargs grep "\<$SEARCH_NAME\>" | grep "\<$SEARCH_KEY\>" | sed "s/Android.mk.*/Android.mk/"`
+  vim +/"\<$SEARCH_KEY\>.*\<$SEARCH_NAME\>" $ANDROID_MK
 fi
 
 exit 1
