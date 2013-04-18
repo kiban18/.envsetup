@@ -14,7 +14,7 @@ fi
 find . -name Android.mk | xargs grep "\<$SEARCH_NAME\>" | grep "\<$SEARCH_KEY\>"
 if [ $? == 0 ]; then
   ANDROID_MK=`find . -name Android.mk | xargs grep "\<$SEARCH_NAME\>" | grep "\<$SEARCH_KEY\>" | sed "s/Android.mk.*/Android.mk/"`
-  vim +/"\<$SEARCH_KEY\>.*\<$SEARCH_NAME\>" $ANDROID_MK
+  vim +/"\(\<$SEARCH_KEY\>.*\<$SEARCH_NAME\>\|BUILD_SHARED_LIBRARY\|BUILD_EXECUTABLE\)" $ANDROID_MK
 fi
 
 exit 1
